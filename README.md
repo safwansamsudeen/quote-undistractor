@@ -17,9 +17,11 @@ For more details, watch a [video demonstration](https://app.box.com/s/868otooovb
 1. Download and add the Boost to Arc by creating an Inject Boost and copying over the contents of `content.js` and `styles.css`. `topics.json` is just for your reference, you can download it if you like, alternatively, you can view the topics in GitHub itself (more info on topics in step 4).
 2. Subscribe for the [Quotel - Quotes API](https://rapidapi.com/skjaldbaka17/api/quotel-quotes) (by clicking on the subscribe button) after creating a free RapidAPI account. I wish I could remove all this API stuff as it complicates the installation process, but my plan is a Free one and I have access to only a 100 API calls everyday. If you subscribe to Quotel - Quotes (it's completely free) you too will get to access to 100 calls (that is, 100 quotes) every day.
 3. Copy the X-RapidAPI-Key, and paste it into the value of the `API_KEY` in line 2 of `content.js`: like this, only your API key instead of `YourAPIKeyHERE`
+
 ```js
 const API_KEY = "YourAPIKeyHERE";
 ```
+
 4. Open `topics.json`, where there's a list of topics along with their IDs. Choose the topics you want and copy over their IDs.
 5. Modify the variables in `content.js` to reflect your choice of topics and periods. Add, modify, or remove periods as you like. For each period, put all the IDs in square brackets after a colon after your chosen name of the period. The IDs should be seperated with a comma, and each line should end with a common. for example, here, for the "work" period, quotes from the topic 75 will appear on the Google homepage.
 
@@ -46,7 +48,16 @@ const PERIODS = {
 };
 ```
 
-7. Feel free to raise a pull request if there are any errors or you have any doubts!
-
+7. Feel free to raise an issue if there are any errors or you have any doubts!
 
 Thanks for checking out Quote Undistractor!
+
+## Known issues / feature improvements
+
+1. We know the design could be improved - it looks a little bad now.
+2. When Google displays a Doodle instead of its logo, for some reason, the Doodle isn't being replace after the search. The stats then look kinda wonky and the clipped quote is not visible to the user.
+3. Hopefully, in the future, we could add support for DuckDuckGo (and even Ecosia and Neeva).
+
+If you're a developer, this extension has helped you, and you have free time, it'd be awesome if you could contribute to this repo!
+
+If you don't fulfil all of the above conditions, please do submit issues for feedback or bug reports. Thanks!

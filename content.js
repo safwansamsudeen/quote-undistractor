@@ -30,7 +30,6 @@ const setNextQuote = async () => {
   // Set to LocalStorage
   if (!newQuote.quote) {
     alert("An error occured, please check the console");
-    console.log(newQuote);
     return;
   }
   localStorage.setItem("quote", newQuote.quote);
@@ -155,7 +154,6 @@ if (onHomePage) {
   holder = document.createElement("div");
   holder.append(stats);
   holder.append(contentHolder);
-  console.log(holder, logo);
   logo.parentElement.prepend(holder);
   logo.remove();
 }
