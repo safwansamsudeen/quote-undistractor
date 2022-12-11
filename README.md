@@ -47,3 +47,6 @@ const PERIODS = {
 ```
 
 7. Feel free to raise a pull request if there are any errors or you have any doubts!
+
+
+Thanks for checking out Quote Undistractor!
