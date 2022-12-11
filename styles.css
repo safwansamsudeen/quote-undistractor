@@ -1,0 +1,67 @@
+.clipped-quote {
+  background: linear-gradient(-120deg, #4285f4, #34a853, #fbbc05, #ea4335);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+  font-size: 15px;
+  margin: 2px auto;
+}
+
+.rest {
+  background: linear-gradient(120deg, #4285f4, #34a853, #fbbc05, #ea4335);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+  font-size: 13px;
+  margin: 2px auto;
+}
+
+.o3j99 {
+  box-sizing: unset !important;
+}
+
+center {
+  padding-bottom: 20px;
+}
+
+.stats {
+  background-color: black;
+  color: white;
+  position: absolute;
+  right: 17px;
+  text-align: center;
+  width: 22%;
+  padding: 10px 10px;
+  border-radius: 4px;
+}
+
+.stats-small {
+  position: relative;
+  right: 0;
+  margin-bottom: 14px;
+  width: fit-content;
+  padding: 5px 7px;
+  font-size: 15px;
+
+}
+
+.standout {
+  color: orange;
+}
+
+.author {
+  margin-top: 17px;
+  padding-top: 5px;
+  border-top: 2px dotted white;
+  font-size: small;
+}
+
+@media only screen and (max-width: 900px) {
+  .stats {
+    position: relative;
+    margin: 0 auto;
+    width: 50%;
+  }
+}
