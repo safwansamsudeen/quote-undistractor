@@ -16,7 +16,7 @@ For more details, watch a [video demonstration](https://app.box.com/s/868otooovb
 
 ## Installation
 
-1. Download and add the Boost to Arc by creating an Inject Boost and copying over the contents of `content.js` and `styles.css`. `topics.json` is just for your reference, you can download it if you like, alternatively, you can view the topics in GitHub itself (more info on topics in step 4).
+1. Download and add the Boost to Arc by creating an Inject Boost and copying over the contents of `content.js` and `styles.css`. `topics.json` is just for your reference, you can download it if you like, alternatively, you can view the topics in GitHub itself (more info on topics in step 4). Set the website of the Boost to "google.com", along with ensuring the Boost runs after the page loads or when the page idles.
 2. Subscribe for the [Quotel - Quotes API](https://rapidapi.com/skjaldbaka17/api/quotel-quotes) (by clicking on the subscribe button) after creating a free RapidAPI account. I wish I could remove all this API stuff as it complicates the installation process, but my plan is a Free one and I have access to only a 100 API calls everyday. If you subscribe to Quotel - Quotes (it's completely free) you too will get to access to 100 calls (that is, 100 quotes) every day.
 3. Copy the X-RapidAPI-Key, and paste it into the value of the `API_KEY` in line 2 of `content.js`: like this, only your API key instead of `YourAPIKeyHERE`
 
