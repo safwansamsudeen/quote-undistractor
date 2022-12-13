@@ -57,7 +57,7 @@ Thanks for checking out Quote Undistractor!
 ## Known issues / feature improvements
 
 1. We know the design could be improved - it looks a little bad now.
-2. When Google displays a Doodle instead of its logo, for some reason, the Doodle isn't being replace after the search. The stats then look kinda wonky and the clipped quote is not visible to the user.
+2. As of now, the Boost does not support Google Doodles - it breaks whenever there's a Google Doodle.
 3. Hopefully, in the future, we could add support for DuckDuckGo (and even Ecosia and Neeva).
 
 If you're a developer, this extension has helped you, and you have free time, it'd be awesome if you could contribute to this repo!
