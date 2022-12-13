@@ -107,11 +107,7 @@ const author = localStorage.getItem("quote-author") || "";
 const [clippedQuote, rest] = getDivider(quote);
 
 // and add it to DOM
-let logo = document.querySelector("img");
-// fix a bug related to when a Google Doodle would appear instead of the logo
-if (logo.alt !== "Google") {
-  logo = logo.parentElement.parentElement;
-}
+let logo = document.querySelector("img[alt='Google']");
 contentHolder = document.createElement("div");
 contentHolder.classList.add("clipped-quote");
 contentHolder.textContent = clippedQuote;
