@@ -1,5 +1,5 @@
 /* HEADS UP: This is the section you should modify - read the instructions for more detail */
-const API_KEY = ""; // Set the API key here
+const API_KEY = "7c3f02b150msh6c7e71d55db7657p19511fjsne90d8afc3de6"; // Set the API key here
 
 const TOPICS = {
   work: [75],
