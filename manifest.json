@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Quote Undistractor",
+  "description": "Focus on your life, utilizing the power of quotes",
+  "version": "1.0",
+  "content_scripts": [
+    {
+      "css": ["styles.css"],
+      "js": ["content.js"],
+      "matches": ["*://*.google.com/*"]
+    }
+  ]
+}
