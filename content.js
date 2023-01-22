@@ -19,75 +19,9 @@ const PERIODS = {
 };
 /* END OF USER MODIFICATION */
 
-/* Helper functions */
-const setNextQuote = async () => {
-  // Download a random quote from the API based on options
-  const newQuoteRes = await fetch(
-    "https://quotel-quotes.p.rapidapi.com/quotes/random",
-    options
-  );
-  const newQuote = await newQuoteRes.json();
-  // Set to LocalStorage
-  if (!newQuote.quote) {
-    alert("An error occured, please check the console");
-    console.log(newQuote);
-    return;
-  }
-  localStorage.setItem("quote", newQuote.quote);
-  localStorage.setItem("quote-author", newQuote.name);
-};
 
-function getDivider(quote) {
-  // Divide a quote by the first word break after the 25th character
-  let i = 25;
-
-  let c = quote[i];
-  while (![" "].includes(c) && i < quote.length) {
-    c = quote[i + 1];
-    i++;
-  }
-
-  let clippedQuote = quote.slice(0, i);
-  let rest = quote.slice(i, quote.length);
-
-  return [clippedQuote, rest];
-}
-
-const getStatsStatement = () => {
-  if (onHomePage) {
-    return `You've visited <span class="standout">${visitCount}</span> time${
-      visitCount !== 1 ? "s" : ""
-    } today, spending <span class="standout">${visitTime}</span> minute${
-      visitTime !== "1.00" ? "s" : ""
-    }. Was it really worth it?`;
-  } else {
-    return `<span class="standout">${visitCount}</span>t, <span class="standout">${visitTime}</span>m`;
-  }
-};
-
-const getTopics = () => {
-  let h = now.getHours();
-
-  let periods = [];
-  for (let [period, time] of Object.entries(PERIODS)) {
-    for (hourPeriod of time) {
-      if (hourPeriod[0] <= h && h < hourPeriod[1]) {
-        periods.push(period);
-      }
-    }
-  }
-
-  let topicIds = [];
-  for (let period of periods) {
-    topicIds = topicIds.concat(TOPICS[period]);
-  }
-  return JSON.stringify(topicIds);
-};
-
-/* Functionality */
 // Set visit constants
 const onHomePage = ["/", "/webhp"].includes(location.pathname);
-const now = new Date();
 
 // Set up topics
 const topicIds = getTopics();
@@ -125,46 +59,6 @@ if (onHomePage) {
   restHolder.textContent = rest;
   visibleCenter.prepend(restHolder);
 }
-
-// Get statistics
-let dayId = Math.floor(now / 8.64e7);
-
-const day = parseInt(localStorage.getItem("last-day"));
-let visitCount = 0;
-let visitTime = 0.0;
-if (day && day === dayId) {
-  visitCount = parseInt(localStorage.getItem("visit-count")) || 0;
-  visitTime =
-    parseFloat(localStorage.getItem("visit-time")).toFixed(2) || "0.00";
-}
-
-// Report stats
-let stats = document.createElement("div");
-stats.classList.add("stats");
-stats.innerHTML = getStatsStatement();
-
-if (onHomePage) {
-  stats.innerHTML += `<div class="author">Quote from ${author}</div>`;
-  logo.parentElement.parentElement.prepend(stats);
-} else {
-  stats.classList.add("stats-small");
-  holder = document.createElement("div");
-  holder.append(stats);
-  holder.append(contentHolder);
-  logo.parentElement.prepend(holder);
-  logo.remove();
-}
-
-/* Work for next visit */
-// Update stats before window unloads
-window.onbeforeunload = () => {
-  localStorage.setItem("last-day", dayId);
-  localStorage.setItem("visit-count", visitCount + 1);
-  localStorage.setItem(
-    "visit-time",
-    parseFloat(visitTime) + (Date.now() - now) / 60000
-  );
-};
 
 // Download next quote asynchronously if user has read this quote
 if (onHomePage) {

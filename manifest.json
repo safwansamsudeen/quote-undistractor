@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "css": ["styles.css"],
-      "js": ["content.js"],
+      "js": ["timeme.min.js", "helpers.js", "content.js", "stats.js"],
       "matches": ["*://*.google.com/*"]
     }
   ]
