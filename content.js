@@ -1,66 +1,101 @@
-/* HEADS UP: This is the section you should modify - read the instructions for more detail */
-const API_KEY = "7c3f02b150msh6c7e71d55db7657p19511fjsne90d8afc3de6"; // Set the API key here
-
-const TOPICS = {
-  work: [75],
-  children: [79, 54],
-  lunch: [23, 96],
-  browsing: [91, 112],
-};
-
-const PERIODS = {
-  children: [
-    [8, 12],
-    [14, 20],
-  ],
-  work: [[21, 22]],
-  lunch: [[13, 14]],
-  browsing: [[6, 7]],
-};
-/* END OF USER MODIFICATION */
-
-
 // Set visit constants
 const onHomePage = ["/", "/webhp"].includes(location.pathname);
+let options, visitCount, visitTime, topicIds, TOPICS, PERIODS;
+TimeMe.initialize({
+    currentPageName: "my-home-page", // current page
+    idleTimeoutInSeconds: 5, // stop recording time due to inactivity
+});
+chrome.storage.sync.get(["topics", "periods"]).then(result => {
+    TOPICS = JSON.parse(result.topics || "{}");
+    PERIODS = JSON.parse(result.periods || "{}")
+    console.log(TOPICS, PERIODS, result)
+    if (!PERIODS || !TOPICS) {
+        alert("Please configure the extension.")
+        throw new Error("Extension not configured");
+    }
 
 // Set up topics
-const topicIds = getTopics();
-const options = {
-  method: "POST",
-  headers: {
-    "content-type": "application/json",
-    "X-RapidAPI-Key": API_KEY,
-    "X-RapidAPI-Host": "quotel-quotes.p.rapidapi.com",
-  },
-  body: `{"topicIds":${topicIds}}`,
-};
+    topicIds = getTopics();
+    options = {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "X-RapidAPI-Key": API_KEY,
+            "X-RapidAPI-Host": "quotel-quotes.p.rapidapi.com",
+        },
+        body: `{"topicIds":${topicIds}}`,
+    };
+
 
 // Get quote
-const quote = localStorage.getItem("quote") || "";
-const author = localStorage.getItem("quote-author") || "";
-const [clippedQuote, rest] = getDivider(quote);
+    const quote = localStorage.getItem("quote") || "";
+    const author = localStorage.getItem("quote-author") || "";
+    const [clippedQuote, rest] = getDivider(quote);
 
 // and add it to DOM
-let logo = document.querySelector("img[alt='Google']");
-contentHolder = document.createElement("div");
-contentHolder.classList.add("clipped-quote");
-contentHolder.textContent = clippedQuote;
-logo.parentElement.append(contentHolder);
+    let logo = document.querySelector("img[alt='Google']");
+    let contentHolder = document.createElement("div");
+    contentHolder.classList.add("clipped-quote");
+    contentHolder.textContent = clippedQuote;
+    logo.parentElement.append(contentHolder);
 
-if (!onHomePage) {
-  contentHolder.innerHTML = `<a href='https://google.com'>${contentHolder.textContent}</a>`;
-}
+    if (!onHomePage) {
+        contentHolder.innerHTML = `<a href='https://google.com'>${contentHolder.textContent}</a>`;
+    }
 
 // Display rest of the quote only if on home page
-if (onHomePage) {
-  let visibleCenter = document.querySelectorAll("center")[1];
-  restHolder = document.createElement("div");
-  restHolder.classList.add("rest");
-  restHolder.textContent = rest;
-  visibleCenter.prepend(restHolder);
-}
+    if (onHomePage) {
+        let visibleCenter = document.querySelectorAll("center")[1];
+        let restHolder = document.createElement("div");
+        restHolder.classList.add("rest");
+        restHolder.textContent = rest;
+        visibleCenter.prepend(restHolder);
+    }
 
+// Get statistics
+    const epoch = new Date(null);
+    const dayId = Math.ceil((now - epoch) / (1000 * 60 * 60 * 24));
+    const day = parseInt(localStorage.getItem("last-day"));
+    visitCount = 0;
+// visitTime is a string as toFixed returns a String
+    visitTime = "0.00";
+    if (day && day === dayId) {
+        visitCount = parseInt(localStorage.getItem("visit-count")) || 0;
+        visitTime =
+            parseFloat(localStorage.getItem("visit-time")).toFixed(2) || "0.00";
+    }
+
+// Report stats
+    let stats = document.createElement("div");
+    stats.classList.add("stats");
+    stats.innerHTML = getStatsStatement();
+
+    if (onHomePage) {
+        stats.innerHTML += `<div class="author">Quote from ${author}</div>`;
+        logo.parentElement.parentElement.prepend(stats);
+    } else {
+        stats.classList.add("stats-small");
+        let holder = document.createElement("div");
+        holder.append(stats);
+        holder.append(contentHolder);
+        logo.parentElement.prepend(holder);
+        logo.remove();
+    }
+
+    /* Work for next visit */
+// Update stats before window unloads
+    window.onbeforeunload = () => {
+        localStorage.setItem("last-day", dayId);
+        localStorage.setItem("visit-count", visitCount + 1);
+        localStorage.setItem(
+            "visit-time",
+            parseFloat(visitTime) + TimeMe.getTimeOnCurrentPageInSeconds() / 60
+        );
+    };
 // Download next quote asynchronously if user has read this quote
-if (onHomePage) {
-  setNextQuote();
-}
+    if (onHomePage) {
+        setNextQuote().catch(r => {
+            console.log(r)
+        });
+    }
+})
