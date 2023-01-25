@@ -506,7 +506,17 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
     let el;
     for (let p in periods) {
         el = document.createElement('p')
-        el.innerHTML = `${p}: from <input name="from" value="${periods[p][0]}" /> o clock to <input name="to" value="${periods[p][1]}" /> o clock`
+        el.innerHTML = `
+            <h5>${p}</h5>
+<div class="input-group" style="margin-bottom: 10px;">
+    <span class="input-group-text">From:</span>
+    <input name="from" value="${periods[p][0]}" class="form-control" type="text"/>
+</div>
+<div class="input-group" style="margin-bottom: 20px;">
+<span class="input-group-text">To:</span>
+<input name="to" value="${periods[p][1]}" class="form-control" type="text"/>
+</div>
+`
         periodsEl.appendChild(el)
 
         el = document.createElement("div")
@@ -519,10 +529,33 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
             let periodEl = topicsEl.querySelector(`#${period}`)
             el = document.createElement('p')
             el.textContent = t.name
-            el.innerHTML = `<input type="checkbox" ${topics[period] && topics[period].includes(t.id) ? 'checked' : ''}/>` + el.innerHTML
+            el.innerHTML = `<div class="form-check" >
+<input type="checkbox" class="form-check-input" ${topics[period] && topics[period].includes(t.id) ? 'checked' : ''}/> 
+<label class="form-check-label">${el.innerHTML}</label>
+</div>`
             periodEl.appendChild(el)
         }
     })
+
+    document.querySelector("#update").onclick = () => {
+        let from, to, name;
+        for (let p of periodsEl.childNodes) {
+            name = p.querySelector("h5").textContent;
+            [from, to] = p.querySelectorAll('input');
+            [from, to] = [Number.parseInt(from.value), Number.parseInt(to.value)];
+            console.log(name, periods[name], from, to)
+            periods[name] = [from, to]
+        }
+        let newPeriod = document.querySelector("#new-period").value
+        let newFrom = Number.parseInt(document.querySelector("#new-from").value)
+        let newTo = Number.parseInt(document.querySelector("#new-to").value);
+
+        let new_ = newPeriod && newFrom && newTo;
+        if (new_) {
+            periods[newPeriod] = [newFrom, newTo]
+        }
+        chrome.storage.sync.set({periods: JSON.stringify(periods)}).then(() => new_ && window.location.reload())
+    }
 })
 
 

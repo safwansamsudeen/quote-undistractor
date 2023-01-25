@@ -5,17 +5,35 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
     <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        html {
+            width: 400px; /* your desired width */
+        }
+    </style>
 </head>
-<body>
-    <h2>Periods</h2>
+<body class="container">
+<section style="margin-bottom: 15px;">
+    <h1>Periods</h1>
     <ul id="periods"></ul>
-
+    <h5>New period</h5>
+    <div class="input-group" style="margin-bottom: 10px;"><span class="input-group-text">Name:</span><input
+            class="form-control" id="new-period" type="text"/></div>
+    <div class="input-group" style="margin-bottom: 10px;"><span class="input-group-text">From:</span><input
+            class="form-control" id="new-from" type="text"/></div>
+    <div class="input-group" style="margin-bottom: 20px;"><span class="input-group-text">To:</span><input
+            class="form-control" id="new-to" type="text"/></div>
+    <div class="d-grid gap-2">
+        <button id="update" class="btn btn-outline-success">Update</button>
+    </div>
+</section>
+<section>
     <h2>Topics</h2>
-    <input type="search" />
     <ul id="topics"></ul>
-
-   <script type="text/javascript" src="config.js"></script>
+</section>
+<script type="text/javascript" src="config.js"></script>
 </body>
 </html>
