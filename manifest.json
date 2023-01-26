@@ -20,7 +20,7 @@
         "content.js"
       ],
       "matches": [
-        "*://*.google.com/*"
+        "*://www.google.com/*"
       ]
     }
   ]
