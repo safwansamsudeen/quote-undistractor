@@ -1,6 +1,6 @@
 // Set visit constants
 const onHomePage = ["/", "/webhp"].includes(location.pathname);
-let options, visitCount, visitTime, topicIds, TOPICS, PERIODS;
+let options, visitCount, visitTime, topicIds, TOPICS, PERIODS, API_KEY;
 TimeMe.initialize({
     currentPageName: "my-home-page", // current page
     idleTimeoutInSeconds: 5, // stop recording time due to inactivity
@@ -8,7 +8,8 @@ TimeMe.initialize({
 chrome.storage.sync.get(["topics", "periods"]).then(result => {
     TOPICS = JSON.parse(result.topics || "{}");
     PERIODS = JSON.parse(result.periods || "{}")
-    console.log(TOPICS, PERIODS, result)
+    // API_KEY = result.api_key
+    API_KEY = "7c3f02b150msh6c7e71d55db7657p19511fjsne90d8afc3de6";
     if (!PERIODS || !TOPICS) {
         alert("Please configure the extension.")
         throw new Error("Extension not configured");
@@ -33,7 +34,12 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
     const [clippedQuote, rest] = getDivider(quote);
 
 // and add it to DOM
-    let logo = document.querySelector("img[alt='Google']");
+    let logo;
+    if (onHomePage) {
+        logo = document.querySelector("img[alt='Google']") || document.querySelector("#hplogo").parentElement.parentElement;
+    } else {
+        logo = document.querySelector('a[href^="https://www.google.com"]')
+    }
     let contentHolder = document.createElement("div");
     contentHolder.classList.add("clipped-quote");
     contentHolder.textContent = clippedQuote;
