@@ -3,8 +3,12 @@
   "name": "Quote Undistractor",
   "description": "Focus on your life, utilizing the power of quotes",
   "version": "1.0",
+  "icons": {
+    "16": "icons/16x16.png",
+    "128": "icons/128x128.png"
+  },
   "action": {
-    "default_popup": "config.html"
+    "default_popup": "static/config.html"
   },
   "permissions": [
     "storage"
@@ -12,12 +16,12 @@
   "content_scripts": [
     {
       "css": [
-        "styles.css"
+        "static/styles.css"
       ],
       "js": [
-        "timeme.min.js",
-        "helpers.js",
-        "content.js"
+        "scripts/timeme.min.js",
+        "scripts/helpers.js",
+        "scripts/content.js"
       ],
       "matches": [
         "*://www.google.com/*"
