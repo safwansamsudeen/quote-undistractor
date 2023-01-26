@@ -1,6 +1,8 @@
+const API_KEY = "";
+
 // Set visit constants
 const onHomePage = ["/", "/webhp"].includes(location.pathname);
-let options, visitCount, visitTime, topicIds, TOPICS, PERIODS, API_KEY;
+let options, visitCount, visitTime, topicIds, TOPICS, PERIODS;
 TimeMe.initialize({
     currentPageName: "my-home-page", // current page
     idleTimeoutInSeconds: 5, // stop recording time due to inactivity
@@ -8,9 +10,7 @@ TimeMe.initialize({
 chrome.storage.sync.get(["topics", "periods"]).then(result => {
     TOPICS = JSON.parse(result.topics || "{}");
     PERIODS = JSON.parse(result.periods || "{}")
-    // API_KEY = result.api_key
-    API_KEY = "7c3f02b150msh6c7e71d55db7657p19511fjsne90d8afc3de6";
-    if (!PERIODS || !TOPICS) {
+    if (!PERIODS || !TOPICS || Object.keys(PERIODS).length === 0) {
         alert("Please configure the extension.")
         throw new Error("Extension not configured");
     }
@@ -24,7 +24,7 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
             "X-RapidAPI-Key": API_KEY,
             "X-RapidAPI-Host": "quotel-quotes.p.rapidapi.com",
         },
-        body: `{"topicIds":${topicIds}}`,
+        body: `{"topicIds":${topicIds}}`
     };
 
 
@@ -100,8 +100,6 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
     };
 // Download next quote asynchronously if user has read this quote
     if (onHomePage) {
-        setNextQuote().catch(r => {
-            console.log(r)
-        });
+        setNextQuote()
     }
 })

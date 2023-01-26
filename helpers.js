@@ -1,6 +1,3 @@
-const API_KEY = "7c3f02b150msh6c7e71d55db7657p19511fjsne90d8afc3de6"; // Set the API key here
-
-
 const now = new Date();
 const setNextQuote = async () => {
     // Download a random quote from the API based on options
@@ -59,7 +56,10 @@ const getTopics = () => {
 
     let topicIds = [];
     for (let period of periods) {
-        topicIds = topicIds.concat(TOPICS[period]);
+        if (TOPICS[period]) {
+            topicIds = topicIds.concat(TOPICS[period]);
+        }
     }
+
     return JSON.stringify(topicIds);
 };

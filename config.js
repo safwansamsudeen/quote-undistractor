@@ -543,7 +543,6 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
             name = p.querySelector("h5").textContent;
             [from, to] = p.querySelectorAll('input');
             [from, to] = [Number.parseInt(from.value), Number.parseInt(to.value)];
-            console.log(name, periods[name], from, to)
             periods[name] = [from, to]
         }
         let newPeriod = document.querySelector("#new-period").value
@@ -563,8 +562,8 @@ document.onchange = () => {
     let topics = {}
     for (let period in periods) {
         let periodEl = topicsEl.querySelector(`#${period}`)
-        Array.from(periodEl.children).forEach((topic, index) => {
-            if (topic.firstChild.checked) {
+        Array.from(periodEl.children).slice(1).forEach((topic, index) => {
+            if (topic.querySelector('input[type=checkbox]').checked) {
                 if (topics[period]) {
                     topics[period].push(AVAILABLE_TOPICS[index].id)
                 } else {
