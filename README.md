@@ -12,6 +12,8 @@ This started off as a Boost for Arc, which is something akin to Chrome extension
 extension. Arc is as of now not supported, but you can see previous commits and copy over the code, if you're really
 interested. Feel free to open an issue if you have doubts or need help.
 
+Read more about the development of the code on my [blog post](https://safwansamsudeen.medium.com/quote-undistractor-101151a8f79c).
+
 ## Quote Undistractor
 
 How many times were you working, went onto Google, and never came off? Or when you're supposed to be with family, you're
@@ -53,6 +55,10 @@ of meddling with code.
 This Boost uses the excellent [Quotel - Quotes API](https://rapidapi.com/skjaldbaka17/api/quotel-quotes). The Free plan
 allows 100 requests/day: however, Þórður Ágústsson, the owner of the API has kindly offered me 4000 requests/day for
 free.
+
+## Installation
+
+Download the `quote-undistractor.crx` file from this repo, and read [this post](https://www.howtogeek.com/120743/how-to-install-extensions-from-outside-the-chrome-web-store/) to see how to install it on your computer. If that doesn't work, try searching online for instructions on installing `.crx` files.
 
 ## Configuration
 
