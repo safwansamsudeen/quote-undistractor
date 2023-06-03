@@ -499,7 +499,7 @@ const AVAILABLE_TOPICS = [
     }
 ]
 let periods;
-chrome.storage.sync.get(["topics", "periods"]).then(result => {
+browser.storage.sync.get(["topics", "periods"]).then(result => {
     periods = JSON.parse(result.periods || "{}")
     const topics = JSON.parse(result.topics || "{}")
 
@@ -553,7 +553,7 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
         if (new_) {
             periods[newPeriod] = [newFrom, newTo]
         }
-        chrome.storage.sync.set({periods: JSON.stringify(periods)}).then(() => new_ && window.location.reload())
+        browser.storage.sync.set({periods: JSON.stringify(periods)}).then(() => new_ && window.location.reload())
     }
 })
 
@@ -572,5 +572,5 @@ document.onchange = () => {
             }
         })
     }
-    chrome.storage.sync.set({topics: JSON.stringify(topics), periods: JSON.stringify(periods)})
+    browser.storage.sync.set({topics: JSON.stringify(topics), periods: JSON.stringify(periods)})
 }
