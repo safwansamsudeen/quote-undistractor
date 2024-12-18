@@ -1,4 +1,4 @@
-const API_KEY = "";
+const API_KEY = "a5d48cd53amshf19487190d9bbcbp1ba226jsn7e2897e5b26c";
 
 // Set visit constants
 const onHomePage = ["/", "/webhp"].includes(location.pathname);
@@ -14,7 +14,6 @@ chrome.storage.sync.get(["topics", "periods"]).then(result => {
         alert("Please configure the extension.")
         throw new Error("Extension not configured");
     }
-
 // Set up topics
     topicIds = getTopics();
     options = {

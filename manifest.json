@@ -27,10 +27,5 @@
         "*://www.google.com/*"
       ]
     }
-  ],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "quote@undistractor.com"
-    }
-  }
+  ]
 }

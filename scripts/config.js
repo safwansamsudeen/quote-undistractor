@@ -499,7 +499,7 @@ const AVAILABLE_TOPICS = [
     }
 ]
 let periods;
-browser.storage.sync.get(["topics", "periods"]).then(result => {
+chrome.storage.sync.get(["topics", "periods"]).then(result => {
     periods = JSON.parse(result.periods || "{}")
     const topics = JSON.parse(result.topics || "{}")
 
@@ -508,15 +508,17 @@ browser.storage.sync.get(["topics", "periods"]).then(result => {
         el = document.createElement('p')
         el.innerHTML = `
             <h5>${p}</h5>
-<div class="input-group" style="margin-bottom: 10px;">
-    <span class="input-group-text">From:</span>
-    <input name="from" value="${periods[p][0]}" class="form-control" type="text"/>
-</div>
-<div class="input-group" style="margin-bottom: 20px;">
-<span class="input-group-text">To:</span>
-<input name="to" value="${periods[p][1]}" class="form-control" type="text"/>
-</div>
-`
+            <form>
+              <div class="form-group">
+                <label for="from">From:</label>
+                <input type="text" value="${periods[p][0]}" class="form-control" id="from" autocomplete="false">
+              </div>
+              <div class="form-group">
+                <label for="to">To:</label>
+                <input type="text" class="form-control" id="to" value="${periods[p][1]}" autocomplete="false">
+              </div>
+            </form>
+        `
         periodsEl.appendChild(el)
 
         el = document.createElement("div")
@@ -524,6 +526,7 @@ browser.storage.sync.get(["topics", "periods"]).then(result => {
         el.innerHTML = `<h2>${p}</h2>`
         topicsEl.appendChild(el)
     }
+
     AVAILABLE_TOPICS.forEach(t => {
         for (let period in periods) {
             let periodEl = topicsEl.querySelector(`#${period}`)
@@ -553,7 +556,7 @@ browser.storage.sync.get(["topics", "periods"]).then(result => {
         if (new_) {
             periods[newPeriod] = [newFrom, newTo]
         }
-        browser.storage.sync.set({periods: JSON.stringify(periods)}).then(() => new_ && window.location.reload())
+        chrome.storage.sync.set({periods: JSON.stringify(periods)}).then(() => new_ && window.location.reload())
     }
 })
 
@@ -572,5 +575,5 @@ document.onchange = () => {
             }
         })
     }
-    browser.storage.sync.set({topics: JSON.stringify(topics), periods: JSON.stringify(periods)})
+    chrome.storage.sync.set({topics: JSON.stringify(topics), periods: JSON.stringify(periods)})
 }
